@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block content %}
+     <div class="row">
+    <div id="navbarCollapse" class="collapse navbar-collapse navbar-right">
+        <ul class="nav nav-tabs">
+            {% if current_user.is_authenticated %}
+                <a class="navbar-brand navbar-left" href="/logout">Пользователь: {{ current_user.name }}</a>
+            {% else %}
+                <a class="btn btn-info " href="/register">Зарегистри</a>
+                <a class="btn btn-info" href="/login">Вход</a>
+            {% endif %}
+            <li><a href="/index">Главная</a></li>
+            <li><a href="/films">Фильмы</a></li>
+            <li class="active"><a href="/serials">Сериалы</a></li>
+            <li><a href="/reiting">Рейтинг фильмов</a></li>
+            <li><a href="/contact">Контакты</a></li>
+        </ul>
+    </div>
+    </div>
+    <div class="wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-lg-push-3">
+
+                   <form role="search" class="visible-xs">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="search" class="form-control input-lg" placeholder="Ваш запрос">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default btn-lg" type="submit"><i class="glyphicon glyphicon-search"></i> </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                    <h1>Сериалы</h1>
+                    <hr>
+
+                    {% for item in films%}
+                        <div class="row">
+                            <div class="well clearfix">
+                                <div class="col-lg-3 col-md-2 text-center">
+                                    <img class="img-thumbnail" src={{item.pict}} alt={{item.name}}>
+                                    <p>{{item.name}}</p>
+                                </div>
+
+                                <div class="col-lg-9 col-md-10">
+                                    <p>
+                                       {{item.about}}
+                                    </p>
+                                </div>
+                                <div class="col-lg-12">
+                                    <a href="/show/{{ item.id }}" class="btn btn-lg btn-warning pull-right">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="margin-8"></div>
+                    {% endfor %}
+
+                </div>
+
+                <div class="col-lg-3 col-lg-pull-9">
+
+                    <div class="panel panel-info hidden-xs">
+                        <div class="panel-heading"><div class="sidebar-header">Поиск</div></div>
+                        <div class="panel-body">
+                            <form role="search">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="search" class="form-control input-lg" placeholder="Ваш запрос">
+                                        <div class="input-group-btn">
+                                        <button class="btn btn-default btn-lg" type="submit"><i class="glyphicon glyphicon-search"></i> </button>
+                                    </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-info">
+                       <div class="panel-heading"><div class="sidebar-header">Новости</div></div>
+                       {% for item in novosti%}
+                            <div class="panel-body">
+                                <p>{{ item.created_date }}</p>
+                                <p>{{ item.content }}</p>
+                            </div>
+                       {% endfor %}
+                    </div>
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><div class="sidebar-header">Рейтинг фильмов</div></div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-warning">
+                                    <span class="badge">8.9</span>
+                                    <a href="#">Интерселлар</a>
+                                </li>
+                                <li class="list-group-item list-group-warning">
+                                    <span class="badge">8.7</span>
+                                    <a href="#">Безумный Макс</a>
+                                </li>
+                                <li class="list-group-item list-group-warning">
+                                    <span class="badge">8.3</span>
+                                    <a href="#">Матрица</a>
+                                </li>
+                                <li class="list-group-item list-group-warning">
+                                    <span class="badge">8.1</span>
+                                    <a href="#">Облачный атлас</a>
+                                </li>
+                                <li class="list-group-item list-group-warning">
+                                    <span class="badge">8.9</span>
+                                    <a href="#">Интерселлар</a>
+                                </li>
+                                <li class="list-group-item list-group-warning">
+                                    <span class="badge">8.7</span>
+                                    <a href="#">Безумный Макс</a>
+                                </li>
+                                <li class="list-group-item list-group-warning">
+                                    <span class="badge">8.3</span>
+                                    <a href="#">Матрица</a>
+                                </li>
+                                <li class="list-group-item list-group-warning">
+                                    <span class="badge">8.1</span>
+                                    <a href="#">Облачный атлас</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+
+{% endblock %}
