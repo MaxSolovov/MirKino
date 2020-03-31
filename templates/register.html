@@ -7,7 +7,7 @@
             {% if current_user.is_authenticated %}
                 <a class="navbar-brand navbar-left" href="/logout">Пользователь: {{ current_user.name }}</a>
             {% else %}
-                <a class="btn btn-info " href="/register">Зарегистри</a>
+                <a class="btn btn-info " href="/register">Регистрация</a>
                 <a class="btn btn-info" href="/login">Вход</a>
             {% endif %}
             <li class="active"><a href="/index">Главная</a></li>
@@ -116,22 +116,6 @@
                             </form>
                         </div>
                     </div>
-                    <!--<div class="panel panel-info">
-                        <div class="panel-heading"><div class="sidebar-header">Вход</div></div>
-                        <div class="panel-body">
-                            <form role="form">
-                                <div class="form-group">
-                                    <input type="text" class="form-control input-lg" placeholder="Логин">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control input-lg" placeholder="Пароль">
-                                </div>
-                                <a class="btn btn-sm btn-default pull-right" href="#">Вход</a>
-                                <a class="btn btn-sm btn-default pull-left" href="/register">Регистрация</a>
-                            </form>
-
-                        </div>
-                    </div>-->
 
                    <div class="panel panel-info">
                         <div class="panel-heading"><div class="sidebar-header">Новости</div></div>
@@ -139,7 +123,6 @@
                             <p>Лента новостей</p>
                         </div>
                     </div>
-
 
                     <div class="panel panel-info">
                         <div class="panel-heading"><div class="sidebar-header">Рейтинг фильмов</div></div>
