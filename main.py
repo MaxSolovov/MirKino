@@ -18,7 +18,8 @@ from data.novosti import Novosti
 import datetime
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
+from wtforms import StringField, PasswordField, BooleanField
+from wtforms import SubmitField, TextAreaField, SelectField, IntegerField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired
 
@@ -41,6 +42,26 @@ def load_user(user_id):
     return session.query(User).get(user_id)
 
 
+def choiseRejiser():
+    ch_rej = []
+    session = db_session.create_session()
+    rej = session.query(Rej).all()
+    for r_ in rej:
+        ch_rej.append((r_.id, r_.name))
+    if not ch_rej:
+        ch_rej.append(('0','Нет данных'))
+    return ch_rej
+
+def choiseJanr():
+    ch_janr = []
+    session = db_session.create_session()
+    jan = session.query(Janr).all()
+    for r_ in jan:
+        ch_janr.append((r_.id, r_.name))
+    if not ch_janr:
+        ch_janr.append(('0', 'Нет данных'))
+    return ch_janr
+
 class RegisterForm(FlaskForm):
     email = EmailField('Почта', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired()])
@@ -57,6 +78,16 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
 
+
+class NewfilmForm(FlaskForm):
+    name = StringField('Название', validators=[DataRequired()])
+    year = IntegerField('Год выпуска', validators=[DataRequired()])
+    #janr = SelectField(u'Жанр', choices=ch_janr)
+    #rejiser = SelectField(u'Режисер', choices=ch_rejiser)
+    about = TextAreaField("Краткое содержание", validators=[DataRequired()])
+    pict = StringField('Обложка (файл)', validators=[DataRequired()])
+    trail = StringField('Трейлер (ссылка)', validators=[DataRequired()])
+    submit = SubmitField('Применить')
 
 @app.route("/")
 @app.route("/index")
@@ -165,6 +196,24 @@ def login():
 def logout():
     logout_user()
     return redirect("/")
+
+
+@app.route('/newfilm', methods=['GET', 'POST'])
+@login_required
+def newfilm():
+    form = NewfilmForm()
+    if form.validate_on_submit():
+        session = db_session.create_session()
+        film = Films()
+        film.year = form.year.data
+        film.name = form.name.data
+        film.pict = form.pict.data
+        film.trail = form.trail.data
+        film.about = form.about.data
+        session.add(film)
+        session.commit()
+        return redirect('/')
+    return render_template('newfilm.html', title='Добавление фильма', form=form)
 
 
 @app.errorhandler(404)

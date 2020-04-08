@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="row">
+     <div class="row">
     <div id="navbarCollapse" class="collapse navbar-collapse navbar-right">
         <ul class="nav nav-tabs">
             {% if current_user.is_authenticated %}
@@ -22,68 +22,73 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-9 col-lg-push-3">
+
                    <form role="search" class="visible-xs">
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="search" class="form-control input-lg" placeholder="Ваш запрос">
                                 <div class="input-group-btn">
-                                <button class="btn btn-default btn-lg" type="submit"><i class="glyphicon glyphicon-search"></i> </button>
+                                    <button class="btn btn-default btn-lg" type="submit"><i class="glyphicon glyphicon-search"></i> </button>
+                                </div>
                             </div>
-                            </div>
+
                         </div>
                     </form>
-
-                    <h2>Новые фильмы</h2>
-                    <hr>
-
-                    <div class="row">
-
-                        {% for item in films%}
-                            <div class="films_block col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                                <img src={{item.pict}} alt={{item.name}}>
-                                <div class="film_label">{{ item.name }}</div>
-                            </div>
-                        {% endfor %}
-
-                    </div>
+                    <h1>Добавление нового фильма</h1>
+                    <form action="" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.csrf_token }}
+                        <p>
+                            {{ form.name.label }}<br>
+                            {{ form.name(class="form-control") }}<br>
+                            {% for error in form.name.errors %}
+                                <p class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.year.label }}<br>
+                            {{ form.year(class="form-control") }}<br>
+                            {% for error in form.year.errors %}
+                                <p content="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.about.label }}<br>
+                            {{ form.about(class="form-control") }}<br>
+                            {% for error in form.about.errors %}
+                                <p class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.pict.label }}<br>
+                            {{ form.pict(class="form-control") }}<br>
+                            {% for error in form.pict.errors %}
+                                <p class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.trail.label }}<br>
+                            {{ form.trail(class="form-control") }}<br>
+                            {% for error in form.trail.errors %}
+                                <p class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </p>
+                        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+                        {{message}}
+                    </form>
                     <div class="margin-8"></div>
-                    {% if current_user.is_authenticated %}
-                        <a href="newfilm" class="btn btn-warning">Добавить фильм</a>
-                    {% endif %}
-                    <div class="margin-8"></div>
-                    <h2>Новые сериалы</h2>
-                    <hr>
-                    <div class="row">
-                        {% for item in serials%}
-                            <div class="films_block col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                                <img src={{item.pict}} alt={{item.name}}>
-                                <div class="film_label">{{ item.name }}</div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="margin-8"></div>
-                    {% if current_user.is_authenticated %}
-                        <a href="news" class="btn btn-warning">Добавить сериал</a>
-                    {% endif %}
-                    <div class="margin-8"></div>
-                    <a href="#"><h3>Как снимали интерселлар</h3></a>
-                    <hr>
-                    <p>
-                        45 лет исполнилось Кристоферу Нолану — одному из самых успешных режиссеров нашего времени, чьи работы одинаково любимы как взыскательными критиками, так и простыми зрителями. Фильмом изначально занималась студия Paramount. Когда Кристофер Нолан занял место режиссера, студия Warner Bros., которая выпускала его последние фильмы, добилась участия в проекте.
-                    </p>
-                    <a href="#" class="btn btn-success pull-right">читать</a>
-                    <div class="margin-8"></div>
-
-                    <a href="#"><h3>Актер Том Ханкс поделился впечатлениями о фестивале</h3></a>
-                    <hr>
-                    <p>
-                        16 февраля в Лондоне состоялась 67-я церемония вручения наград Британской киноакадемии. Леонардо ДиКаприо, Брэд Питт, Анджелина Джоли, Кейт Бланшетт, Хелен Миррен, Эми Адамс, Кристиан Бэйл, Альфонсо Куарон и другие гости и победители премии — в нашем репортаже.
-                    </p>
-                    <a href="#" class="btn btn-success pull-right">читать</a>
-                    <div class="margin-8 clear"></div>
-
-
                 </div>
+
                 <div class="col-lg-3 col-lg-pull-9">
 
                     <div class="panel panel-info hidden-xs">
@@ -104,15 +109,11 @@
                     </div>
 
                    <div class="panel panel-info">
-                       <div class="panel-heading"><div class="sidebar-header">Новости</div></div>
-                       {% for item in novosti%}
-                            <div class="panel-body">
-                                <p>{{ item.created_date }}</p>
-                                <p>{{ item.content }}</p>
-                            </div>
-                       {% endfor %}
+                        <div class="panel-heading"><div class="sidebar-header">Новости</div></div>
+                        <div class="panel-body">
+                            <p>Лента новостей</p>
+                        </div>
                     </div>
-
 
                     <div class="panel panel-info">
                         <div class="panel-heading"><div class="sidebar-header">Рейтинг фильмов</div></div>
@@ -161,4 +162,5 @@
         </div>
         <div class="clear"></div>
     </div>
+
 {% endblock %}
